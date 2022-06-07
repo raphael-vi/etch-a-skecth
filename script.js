@@ -1,33 +1,121 @@
 const DEFAULT_GRID = 16;
-let size = DEFAULT_GRID;
+const DEFAULT_COLOR = 'black';
 const container = document.querySelector('.grid-container');
 
 const clear = document.querySelector('.clear');
 const gridSize = document.querySelector('.gridsize')
-const submit = document.querySelector('.submit')
+const gridColor = document.querySelector('.color')
+const randomize = document.querySelector('.randomize')
+const eraser = document.querySelector('.eraser')
+const shadow = document.querySelector('.shadow')
 
+
+let size = DEFAULT_GRID;
+let color = DEFAULT_COLOR;
+
+
+
+/* ---------- COLOR CHANGE -------------- */
+
+/* Lembrete =  Adcionar uma forma de reset */
+
+gridColor.addEventListener('change',(e)=> color = e.target.value)
+
+let random = false;
+let eraserTog = false;
+let shadowTog = false;
+
+randomize.onclick = (e) => {
+    random == false? random = true : random = false;
+    shadowTog = false;
+    eraserTog = false;
+}
+
+shadow.onclick = (e) => {
+    shadowTog == false? shadowTog = true : shadowTog = false;
+    eraserTog = false;
+    random = false;
+}
+
+eraser.onclick = (e) => {
+    eraserTog == false ? eraserTog = true : eraserTog = false;
+    random = false;
+    shadowTog = false;
+}
+
+clear.onclick = () => reload()
+
+
+function colorChange(e){
+    
+    if(random == true){
+        e.addEventListener('mouseenter', (e) => {
+            R = Math.floor(Math.random()* 256) 
+            G = Math.floor(Math.random()* 256)  
+            B = Math.floor(Math.random()* 256)
+            
+            
+            e.target.style.backgroundColor= `rgb(${R},${G}, ${B})`    
+            
+    })
+    }else if(eraserTog == true){
+        
+        e.addEventListener('mouseenter',(e) =>{
+        e.target.style.backgroundColor= 'white';
+    })    
+    }else if(shadowTog == true){
+        e.addEventListener('mouseenter', (e) =>{
+        
+            let RGB =  e.target.style.backgroundColor
+        
+            let R = parseInt(RGB.slice(4,7));
+            let G = parseInt(RGB.slice(8, 12));
+            let B = parseInt(RGB.slice(13, 17));
+            R = G;
+            B = R;
+
+            let newColor =  `rgb(${R - 50}, ${G - 50}, ${B - 50})`
+            
+            e.target.style.backgroundColor = newColor;
+
+    })
+    }else{
+        e.addEventListener('mouseenter',(e) =>{
+        e.target.style.backgroundColor= `${color}`;
+
+    }) 
+    }
+    
+    
+
+}
+
+
+
+/* ---GRID SIZE -------- */
 gridSize.addEventListener('change', (e) => sizeGrid(e.target.value));
-
-gridSize.min='1';
 gridSize.max='100';
-
-
+gridSize.min='1';
 
 
 function addGrid(number){
     let mult = number*number
     container.style.gridTemplateRows = `repeat(${number}, 1fr)`
     container.style.gridTemplateColumns = `repeat(${number}, 1fr)`
-
-
-
-    for(let i = 0; i <mult; i++){
-        const gridCell = document.createElement('div');
+    
+    
+    
+    for(let i = 0; i < mult; i++){
+        let gridCell = document.createElement('div');
         gridCell.classList.add('grid-cell');
+        gridCell.style.backgroundColor = `hsl(0, 0% , 100%)`
+        gridCell.onmouseover = () => colorChange(gridCell)
         container.appendChild(gridCell)
-        
+
+
     }
 }
+
 
 function sizeGrid(number){
     newSize(number)
@@ -44,27 +132,4 @@ function newSize(current){
     size = current
 }
 
-
-
 sizeGrid(size)
-
-
-/*------EVENTOS --- */
-let cell = document.querySelectorAll('.grid-cell')
-
-
-
-cell.forEach(cell =>{ 
-    cell.addEventListener( "mouseover" , () => { 
-        cell.classList.add('active')
-    })
-})
-
-
-
-clear.addEventListener('click', ()=>{ 
-    cell.forEach(cell =>{ 
-       cell.classList.remove('active')
-    })
-})
-

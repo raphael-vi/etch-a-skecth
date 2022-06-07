@@ -8,16 +8,27 @@
     <title>Etch-a-sketch</title>
 </head>
 <body>
-    <button class="clear">clear</button>
-    <input class="gridsize" type="range" name="" id="" value="16" >
-    <button  class="submit" type="submit" form="gridsize"> aa</button>
-    </form>
-    <input class="color" type="color">
-    <main class="container">
-        <div class="grid-container">
-        
+    <div class="wrapper">
+        <div class="buttons">
+            <button class="clear">clear</button>
+            <button class="randomize" >randomize</button>
+            <button class="eraser" >eraser</button>
+            <button class="shadow">shadow</button>
+            
         </div>
-    </main>
+        
+        <main class="container">
+            <div class="configs">
+                <input class="gridsize" type="range" name="" id="" value="1" step="1" >
+                <input class="color" type="color">
+                
+            </div>
+            <div class="grid-container">
+                
+            </div>
+        </main>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
