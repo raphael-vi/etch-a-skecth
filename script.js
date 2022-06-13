@@ -15,30 +15,46 @@ let color = DEFAULT_COLOR;
 
 
 
+
 /* ---------- COLOR CHANGE -------------- */
 
 /* Lembrete =  Adcionar uma forma de reset */
 
-gridColor.addEventListener('change',(e)=> color = e.target.value)
+gridColor.addEventListener('change',(e)=>{
+
+   color = e.target.value
+})
 
 let random = false;
 let eraserTog = false;
 let shadowTog = false;
 
+
+
+
 randomize.onclick = (e) => {
+    shadow.classList.remove('toggle')
+    eraser.classList.remove('toggle')
     random == false? random = true : random = false;
+    random == true? randomize.classList.add('toggle'): randomize.classList.remove('toggle');
     shadowTog = false;
     eraserTog = false;
 }
 
 shadow.onclick = (e) => {
+    eraser.classList.remove('toggle');
+    randomize.classList.remove('toggle');
     shadowTog == false? shadowTog = true : shadowTog = false;
+    shadowTog == true? shadow.classList.add('toggle'): shadow.classList.remove('toggle');
     eraserTog = false;
     random = false;
 }
 
 eraser.onclick = (e) => {
+    randomize.classList.remove('toggle')
+    shadow.classList.remove('toggle')
     eraserTog == false ? eraserTog = true : eraserTog = false;
+    eraserTog == true? eraser.classList.add('toggle'): eraser.classList.remove('toggle');
     random = false;
     shadowTog = false;
 }
@@ -61,7 +77,7 @@ function colorChange(e){
     }else if(eraserTog == true){
         
         e.addEventListener('mouseenter',(e) =>{
-        e.target.style.backgroundColor= 'white';
+        e.target.style.backgroundColor= `hsl(0, 0% , 100%)`;
     })    
     }else if(shadowTog == true){
         e.addEventListener('mouseenter', (e) =>{
@@ -132,4 +148,4 @@ function newSize(current){
     size = current
 }
 
-sizeGrid(size)
+sizeGrid(size);
