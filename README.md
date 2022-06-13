@@ -1,2 +1,2 @@
-# etch-a-skecth
-Um projeto de quadro de desenho
+# LIVE PREVIEW
+https://raphael-vi.github.io/etch-a-skecth/
